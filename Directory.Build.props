@@ -1,0 +1,37 @@
+<Project>
+    <PropertyGroup>
+        <LangVersion>11.0</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <DebugType>portable</DebugType>
+        <DebugSymbols>True</DebugSymbols>
+
+        <NoWarn>CS1591</NoWarn>
+
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+
+        <NoWarn>$(NoWarn);CA1416;NU1507</NoWarn>
+
+        <DefaultLanguage>en</DefaultLanguage>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+        <!-- Fody -->
+
+        <WeaverConfiguration>
+            <Weavers>
+                <RuntimeNullables />
+            </Weavers>
+        </WeaverConfiguration>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Fody -->
+        <PackageReference Include="RuntimeNullables.Fody" PrivateAssets="all" />
+
+        <!-- Analyzers -->
+        <PackageReference Include="DotNetAnalyzers.DocumentationAnalyzers" PrivateAssets="all" />
+        <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all" />
+        <PackageReference Include="Roslynator.Analyzers" PrivateAssets="all" />
+    </ItemGroup>
+</Project>
