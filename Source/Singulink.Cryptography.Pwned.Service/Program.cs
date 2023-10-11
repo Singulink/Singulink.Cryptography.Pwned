@@ -55,7 +55,7 @@ static async Task<IResult> CheckPasswordHashAsync(string passwordHash, PwnedDbCo
     passwordHash = passwordHash.Trim().ToUpperInvariant();
 
     if (passwordHash.Length != 40 || !passwordHash.All(c => (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F')))
-        return TypedResults.BadRequest("Password hash should be 40 hex characters.");
+        return Results.Text("Password hash should be 40 hex characters.", statusCode: StatusCodes.Status400BadRequest);
 
     return await CheckPasswordHashImplAsync(passwordHash, context);
 }
