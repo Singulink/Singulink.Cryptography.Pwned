@@ -1,44 +1,80 @@
-var builder = WebApplication.CreateBuilder(args);
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Singulink.Cryptography.Pwned;
+using Singulink.Cryptography.Pwned.Service.Models;
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+builder.Services.AddDbContext<PwnedDbContext>(options => {
+    string connectionString = builder.Configuration.GetConnectionString("PwnedDatabase") ?? throw new KeyNotFoundException("Connection string not found.");
+    options.UseSqlServer(connectionString);
+});
 
-// Configure the HTTP request pipeline.
+WebApplication app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<PwnedDbContext>();
+    await context.Database.MigrateAsync();
+
+    if (!context.Passwords.Any())
+    {
+        // password : 1234
+        context.Passwords.Add(new Password { Hash = "7110eda4d09e062aa5e4a390b0a572ac0d2c0220".ToUpperInvariant(), Count = 1 });
+
+        // password: abcd
+        context.Passwords.Add(new Password { Hash = "81fe8bfe87576c3ecb22426f8e57847382917acf".ToUpperInvariant(), Count = 2 });
+
+        context.SaveChanges();
+    }
 }
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.Map("/CheckPassword", CheckPasswordAsync);
+app.Map("/CheckPasswordHash", CheckPasswordHashAsync);
 
 app.Run();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+static async Task<IResult> CheckPasswordAsync(string password, PwnedDbContext context)
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    string hashedPassword = GetSHA1Hash(password);
+    return await CheckPasswordHashImplAsync(hashedPassword, context);
+}
+
+static async Task<IResult> CheckPasswordHashAsync(string passwordHash, PwnedDbContext context)
+{
+    passwordHash = passwordHash.Trim().ToUpperInvariant();
+
+    if (passwordHash.Length != 40 || !passwordHash.All(c => (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F')))
+        return TypedResults.BadRequest("Password hash should be 40 hex characters.");
+
+    return await CheckPasswordHashImplAsync(passwordHash, context);
+}
+
+static async Task<IResult> CheckPasswordHashImplAsync(string passwordHash, PwnedDbContext context)
+{
+    var p = await context.Passwords.FirstOrDefaultAsync(p => p.Hash == passwordHash);
+
+    if (p == null)
+        return Results.NotFound();
+
+    return TypedResults.Ok<CheckPasswordResult>(new(p.Count));
+}
+
+static string GetSHA1Hash(string input)
+{
+    using SHA1 sha1 = SHA1.Create();
+    byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+    byte[] hashBytes = sha1.ComputeHash(inputBytes);
+
+    return Convert.ToHexString(hashBytes);
 }

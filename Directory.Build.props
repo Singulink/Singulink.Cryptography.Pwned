@@ -25,6 +25,10 @@
         </WeaverConfiguration>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
     <ItemGroup>
         <!-- Fody -->
         <PackageReference Include="RuntimeNullables.Fody" PrivateAssets="all" />
