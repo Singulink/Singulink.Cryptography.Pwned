@@ -1,13 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <TargetFramework>net9.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <Version>1.0.0</Version>
+    <PackageTags>pwned; passwords; client; server; service; database;</PackageTags>
+    <Description>Free .NET Pwned password database client and server.</Description>
+    <PackageProjectUrl>https://github.com/Singulink/Singulink.Cryptography.Pwned</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Singulink.Cryptography.Pwned\CheckPasswordResult.cs" Link="CheckPasswordResult.cs" />
+    <Compile Include="..\Singulink.Cryptography.Pwned.Service\CheckPasswordResult.cs" Link="CheckPasswordResult.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Link="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>

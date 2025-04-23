@@ -72,7 +72,7 @@ static async Task<IResult> CheckPasswordHashImplAsync(string passwordHash, Pwned
 
 static string GetSHA1Hash(string input)
 {
-    using SHA1 sha1 = SHA1.Create();
+    using var sha1 = SHA1.Create();
     byte[] inputBytes = Encoding.UTF8.GetBytes(input);
     byte[] hashBytes = sha1.ComputeHash(inputBytes);
 

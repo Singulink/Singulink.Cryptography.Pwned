@@ -1,25 +1,25 @@
 <Project ToolsVersion="15.0">
   <ItemGroup>
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.11" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.11" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="7.0.0" />
-    <PackageVersion Include="Shouldly" Version="4.2.1" />
-    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.4" />
+    <PackageVersion Include="Shouldly" Version="4.3.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="8.1.1" />
     <!-- Fody -->
-    <PackageVersion Include="RuntimeNullables.Fody" Version="1.0.5" />
+    <PackageVersion Include="RuntimeNullables.Fody" Version="2.0.0" />
     <!-- Analyzers -->
     <PackageVersion Include="DotNetAnalyzers.DocumentationAnalyzers" Version="1.0.0-beta.59" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.435" />
-    <PackageVersion Include="Roslynator.Analyzers" Version="4.4.0" />
+    <PackageVersion Include="Roslynator.Analyzers" Version="4.13.1" />
     <!-- Testing -->
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
-    <PackageVersion Include="MSTest.TestAdapter" Version="2.2.10" />
-    <PackageVersion Include="MSTest.TestFramework" Version="2.2.10" />
-    <PackageVersion Include="coverlet.collector" Version="3.2.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="3.8.3" />
+    <PackageVersion Include="MSTest.TestFramework" Version="3.8.3" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Singulink.Cryptography.Pwned.Tests;
 

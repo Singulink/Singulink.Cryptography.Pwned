@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Singulink.Cryptography.Pwned", "Source\Singulink.Cryptography.Pwned\Singulink.Cryptography.Pwned.csproj", "{B08EF689-1C8D-40F3-ADA4-A90CB9D4C4A3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Singulink.Cryptography.Pwned.Client", "Source\Singulink.Cryptography.Pwned.Client\Singulink.Cryptography.Pwned.Client.csproj", "{CF7576D7-1553-463F-95AC-00C699148FA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Singulink.Cryptography.Pwned.Service", "Source\Singulink.Cryptography.Pwned.Service\Singulink.Cryptography.Pwned.Service.csproj", "{6FE88C71-E978-4C17-B7B1-E6D37FA7D02D}"
@@ -18,6 +16,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests Items", "Tests Items", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\.editorconfig = Tests\.editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{854D99DA-AD52-4D1C-A49E-9EAE27E85DAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source Items", "Source Items", "{11848444-C662-4556-8486-2924FED531F1}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Directory.Build.props = Source\Directory.Build.props
 	EndProjectSection
 EndProject
 Global
@@ -26,10 +37,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B08EF689-1C8D-40F3-ADA4-A90CB9D4C4A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B08EF689-1C8D-40F3-ADA4-A90CB9D4C4A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B08EF689-1C8D-40F3-ADA4-A90CB9D4C4A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B08EF689-1C8D-40F3-ADA4-A90CB9D4C4A3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CF7576D7-1553-463F-95AC-00C699148FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CF7576D7-1553-463F-95AC-00C699148FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF7576D7-1553-463F-95AC-00C699148FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,7 +54,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{CF7576D7-1553-463F-95AC-00C699148FA0} = {854D99DA-AD52-4D1C-A49E-9EAE27E85DAC}
+		{6FE88C71-E978-4C17-B7B1-E6D37FA7D02D} = {854D99DA-AD52-4D1C-A49E-9EAE27E85DAC}
 		{BC1FA733-0AED-4022-9C51-2F69C9791D66} = {33AB3630-D979-4A1E-BF1E-0BB0B6965566}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {33AB3630-D979-4A1E-BF1E-0BB0B6965566}
+		{11848444-C662-4556-8486-2924FED531F1} = {854D99DA-AD52-4D1C-A49E-9EAE27E85DAC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5E4010F-1312-4732-8021-487D14D4D9F4}
