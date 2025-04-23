@@ -1,41 +1,41 @@
 <Project>
-    <PropertyGroup>
-        <LangVersion>11.0</LangVersion>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
 
-        <DebugType>portable</DebugType>
-        <DebugSymbols>True</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>True</DebugSymbols>
 
-        <NoWarn>CS1591</NoWarn>
+    <NoWarn>CS1591</NoWarn>
 
-        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 
-        <NoWarn>$(NoWarn);CA1416;NU1507</NoWarn>
+    <NoWarn>$(NoWarn);CA1416;NU1507</NoWarn>
 
-        <DefaultLanguage>en</DefaultLanguage>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DefaultLanguage>en</DefaultLanguage>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-        <!-- Fody -->
+    <!-- Fody -->
 
-        <WeaverConfiguration>
-            <Weavers>
-                <RuntimeNullables />
-            </Weavers>
-        </WeaverConfiguration>
-    </PropertyGroup>
+    <WeaverConfiguration>
+      <Weavers>
+        <RuntimeNullables />
+      </Weavers>
+    </WeaverConfiguration>
+  </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <!-- Fody -->
-        <PackageReference Include="RuntimeNullables.Fody" PrivateAssets="all" />
+  <ItemGroup>
+    <!-- Fody -->
+    <PackageReference Include="RuntimeNullables.Fody" PrivateAssets="all" />
 
-        <!-- Analyzers -->
-        <PackageReference Include="DotNetAnalyzers.DocumentationAnalyzers" PrivateAssets="all" />
-        <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all" />
-        <PackageReference Include="Roslynator.Analyzers" PrivateAssets="all" />
-    </ItemGroup>
+    <!-- Analyzers -->
+    <PackageReference Include="DotNetAnalyzers.DocumentationAnalyzers" PrivateAssets="all" />
+    <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all" />
+    <PackageReference Include="Roslynator.Analyzers" PrivateAssets="all" />
+  </ItemGroup>
 </Project>

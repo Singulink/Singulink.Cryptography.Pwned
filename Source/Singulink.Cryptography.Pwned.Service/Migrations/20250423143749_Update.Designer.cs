@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Singulink.Cryptography.Pwned.Service.Models;
 
@@ -10,9 +11,11 @@ using Singulink.Cryptography.Pwned.Service.Models;
 namespace Singulink.Cryptography.Pwned.Service.Migrations
 {
     [DbContext(typeof(PwnedDbContext))]
-    partial class PwnedDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250423143749_Update")]
+    partial class Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

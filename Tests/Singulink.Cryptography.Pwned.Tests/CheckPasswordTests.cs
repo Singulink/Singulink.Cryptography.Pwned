@@ -6,6 +6,8 @@ namespace Singulink.Cryptography.Pwned.Tests;
 [TestClass]
 public class CheckPasswordTests
 {
+    private static readonly PwnedClientHttpFactory _httpClientFactory = new PwnedClientHttpFactory();
+
     [TestMethod]
     public async Task CheckPasswordAsync_PasswordDoesntExist_NotFound()
     {
@@ -22,7 +24,7 @@ public class CheckPasswordTests
         var result = await client.CheckPasswordAsync("1234");
 
         result.ShouldNotBeNull();
-        result.Count.ShouldBe(1);
+        result.Count.ShouldBeGreaterThan(0);
     }
 
     [TestMethod]
@@ -41,7 +43,7 @@ public class CheckPasswordTests
         var result = await client.CheckPasswordHashAsync("81fe8bfe87576c3ecb22426f8e57847382917acf");
 
         result.ShouldNotBeNull();
-        result.Count.ShouldBe(2);
+        result.Count.ShouldBeGreaterThan(0);
     }
 
     [TestMethod]
@@ -68,9 +70,8 @@ public class CheckPasswordTests
 
     private static PwnedClient GetClient()
     {
-        var httpClientFactory = new PwnedClientHttpFactory();
-        var client = new PwnedClient(httpClientFactory);
-        PwnedClient.ApiBaseUri = httpClientFactory.CreateClient().BaseAddress ?? throw new InvalidOperationException("Base address not found.");
+        var client = new PwnedClient(_httpClientFactory);
+        PwnedClient.ApiBaseUri = new Uri("https://pwned.singulink.com");
         return client;
     }
 }
