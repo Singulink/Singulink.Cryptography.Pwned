@@ -21,11 +21,11 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.Map("/CheckPassword", CheckPasswordAsync)
+app.MapGet("/CheckPassword", CheckPasswordAsync)
     .Produces<CheckPasswordResult>()
     .Produces(404);
 
-app.Map("/CheckPasswordHash", CheckPasswordHashAsync)
+app.MapGet("/CheckPasswordHash", CheckPasswordHashAsync)
     .Produces<CheckPasswordResult>()
     .Produces(404);
 
