@@ -20,21 +20,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    using var scope = app.Services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<PwnedDbContext>();
-    await context.Database.MigrateAsync();
-
-    if (!context.Passwords.Any())
-    {
-        // password : 1234
-        context.Passwords.Add(new Password { Hash = "7110eda4d09e062aa5e4a390b0a572ac0d2c0220".ToUpperInvariant(), Count = 1 });
-
-        // password: abcd
-        context.Passwords.Add(new Password { Hash = "81fe8bfe87576c3ecb22426f8e57847382917acf".ToUpperInvariant(), Count = 2 });
-
-        context.SaveChanges();
-    }
 }
 
 app.UseHttpsRedirection();

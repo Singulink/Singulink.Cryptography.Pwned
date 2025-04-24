@@ -4,7 +4,11 @@
 [![View nuget packages](https://img.shields.io/nuget/v/Singulink.Cryptography.Pwned.Client.svg)](https://www.nuget.org/packages/Singulink.Cryptography.Pwned.Client/)
 [![Build and Test](https://github.com/Singulink/Singulink.Cryptography.Pwned/workflows/build%20and%20test/badge.svg)](https://github.com/Singulink/Singulink.Cryptography.Pwned/actions?query=workflow%3A%22build+and+test%22)
 
-**Singulink.Cryptography.Pwned** is a .NET project that contains a client and optional server for checking if a password has been compromised in a data breach using the [Have I Been Pwned](https://haveibeenpwned.com/) database. It provides a simple and efficient way to verify the security of passwords against a large database of known compromised passwords. You can use the client without running your own service - our publicly available service is hosted at [https://pwned.singulink.com](https://pwned.singulink.com) and the client defaults to using this service.
+**Singulink.Cryptography.Pwned** is a .NET project that contains a client and optional server for checking if a password has been compromised in a data breach using the [Have I Been Pwned](https://haveibeenpwned.com/) database. It provides a simple and efficient way to verify the security of passwords against a large database of known compromised passwords.
+
+You can use the client without running your own service - the client defaults to using our publicly available service (API hosted at `pwned.singulink.com`).
+
+We kindly ask that you limit usage of our free public service to checking passwords during user registration and/or logins, and not for bulk checking of passwords. If you have a high volume application or need to check large numbers of passwords, please consider running your own instance of the service or download the Pwned database yourself and check against it locally.
 
 ### About Singulink
 
@@ -14,7 +18,7 @@ This package is part of our **Singulink Libraries** collection. Visit https://gi
 
 ## Installation
 
-For checking passwords using the client, a package is available on NuGet - simply install the `Singulink.Cryptography.Pwned.Client` package.
+For checking passwords, a client package is available on NuGet - simply install the `Singulink.Cryptography.Pwned.Client` package.
 
 **Supported Runtimes**: .NET 9.0+
 
