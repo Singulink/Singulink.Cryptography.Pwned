@@ -1,4 +1,5 @@
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Singulink.Cryptography.Pwned.Client;
@@ -26,12 +27,10 @@ public class PwnedClient : IPwnedClient
     /// <summary>
     /// Checks the specified password against the Pwned Passwords database.
     /// </summary>
-    public async Task<CheckPasswordResult?> CheckPasswordAsync(string password)
+    public Task<CheckPasswordResult?> CheckPasswordAsync(string password)
     {
-        using HttpClient client = _httpClientFactory.CreateClient();
-        Uri url = GetApiUrl("/CheckPassword", (nameof(password), password));
-
-        return await client.GetOkOrNotFound<CheckPasswordResult>(url);
+        string passwordHash = GetSHA1Hash(password);
+        return CheckPasswordHashAsync(passwordHash);
     }
 
     /// <summary>
@@ -40,12 +39,27 @@ public class PwnedClient : IPwnedClient
     public async Task<CheckPasswordResult?> CheckPasswordHashAsync(string passwordHash)
     {
         using HttpClient client = _httpClientFactory.CreateClient();
-        Uri url = GetApiUrl("/CheckPasswordHash", (nameof(passwordHash), passwordHash));
+        Uri url = GetApiUrl("/CheckPasswordHash", ("passwordHash", passwordHash));
 
-        return await client.GetOkOrNotFound<CheckPasswordResult>(url);
+        return await client.GetOkOrNotFound(PwnedJsonSerializerContext.Default.CheckPasswordResult, url);
     }
 
-    private Uri GetApiUrl(string path, params (string Name, object Value)[] queryStringParams)
+    private static string GetSHA1Hash(string input)
+    {
+        byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+
+#if NET
+        byte[] hashBytes = SHA1.HashData(inputBytes);
+        return Convert.ToHexString(hashBytes);
+#else
+        using var sha1 = SHA1.Create();
+        byte[] hashBytes = sha1.ComputeHash(inputBytes);
+
+        return BitConverter.ToString(hashBytes).Replace("-", string.Empty);
+#endif
+    }
+
+    private static Uri GetApiUrl(string path, params (string Name, string? Value)[] queryStringParams)
     {
         if (ApiBaseUri == null)
             throw new InvalidOperationException("Must set API base URI.");
@@ -59,18 +73,17 @@ public class PwnedClient : IPwnedClient
 
         bool first = true;
 
-        foreach ((string Name, object Value) pair in queryStringParams.Where(p => p.Value != null))
+        foreach ((string name, string? value) in queryStringParams)
         {
+            if (value is null)
+                continue;
+
             if (!first)
                 qs.Append('&');
 
-            qs.Append(pair.Name);
+            qs.Append(name);
             qs.Append('=');
-
-            if (pair.Value is DateTime dateTime)
-                qs.Append(new DateTime(dateTime.Ticks, DateTimeKind.Unspecified).ToString("O"));
-            else
-                qs.Append(WebUtility.UrlEncode(pair.Value.ToString()));
+            qs.Append(WebUtility.UrlEncode(value));
 
             first = false;
         }

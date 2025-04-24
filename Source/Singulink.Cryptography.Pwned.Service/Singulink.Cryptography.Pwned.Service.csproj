@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <NoWarn>SA1600;CS1591</NoWarn>
     <SignAssembly>false</SignAssembly>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

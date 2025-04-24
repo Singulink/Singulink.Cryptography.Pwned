@@ -16,16 +16,18 @@ builder.Services.AddDbContext<PwnedDbContext>(options => {
 
 WebApplication app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.Map("/CheckPassword", CheckPasswordAsync);
-app.Map("/CheckPasswordHash", CheckPasswordHashAsync);
+app.Map("/CheckPassword", CheckPasswordAsync)
+    .Produces<CheckPasswordResult>()
+    .Produces(404);
+
+app.Map("/CheckPasswordHash", CheckPasswordHashAsync)
+    .Produces<CheckPasswordResult>()
+    .Produces(404);
 
 app.Run();
 
@@ -49,7 +51,7 @@ static async Task<IResult> CheckPasswordHashImplAsync(string passwordHash, Pwned
 {
     var p = await context.Passwords.FirstOrDefaultAsync(p => p.Hash == passwordHash);
 
-    if (p == null)
+    if (p is null)
         return Results.NotFound();
 
     return TypedResults.Ok<CheckPasswordResult>(new(p.Count));
@@ -57,9 +59,8 @@ static async Task<IResult> CheckPasswordHashImplAsync(string passwordHash, Pwned
 
 static string GetSHA1Hash(string input)
 {
-    using var sha1 = SHA1.Create();
     byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-    byte[] hashBytes = sha1.ComputeHash(inputBytes);
+    byte[] hashBytes = SHA1.HashData(inputBytes);
 
     return Convert.ToHexString(hashBytes);
 }

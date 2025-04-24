@@ -20,6 +20,11 @@ This package is part of our **Singulink Libraries** collection. Visit https://gi
 
 For checking passwords, a client package is available on NuGet - simply install the `Singulink.Cryptography.Pwned.Client` package.
 
-**Supported Runtimes**: .NET 9.0+
+**Supported Runtimes**: Everywhere .NET Standard 2.0 is supported, including:
+- .NET
+- .NET Framework
+- Mono / Xamarin
+
+End-of-life runtime versions that are no longer officially supported are not tested or supported by this library.
 
 For running the service on your own infrastructure, deploy `Singulink.Cryptography.Pwned.Server` to your desired hosting destination. The project is a .NET 9.0+ web service that can be hosted in IIS, Azure, or any other .NET hosting environment. You will need to configure your own database connection string in `appsettings.json` and import the Pwned passwords into your database. You can point the client to your service by setting `PwnedClient.ApiBaseUri` to the URL of your service.
