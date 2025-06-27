@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
-    <Version>1.1.0</Version>
+    <LangVersion>preview</LangVersion>
+    <Version>2.0</Version>
     <PackageTags>pwned; passwords; client; server; service; database;</PackageTags>
     <Description>Free .NET Pwned password database client and server.</Description>
     <PackageProjectUrl>https://github.com/Singulink/Singulink.Cryptography.Pwned</PackageProjectUrl>

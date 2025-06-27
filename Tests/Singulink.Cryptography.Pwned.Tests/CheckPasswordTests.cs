@@ -1,13 +1,9 @@
-using System.Net.Http;
-using Shouldly;
-using Singulink.Cryptography.Pwned.Client;
-
 namespace Singulink.Cryptography.Pwned.Tests;
 
 [TestClass]
 public class CheckPasswordTests
 {
-    private static readonly PwnedClient _client = new PwnedClient(new TestHttpClientFactory());
+    private static readonly PwnedClient _client = new();
 
     [TestMethod]
     public async Task CheckPasswordAsync_PasswordDoesNotExist_NotFound()
