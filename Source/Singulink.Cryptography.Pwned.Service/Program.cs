@@ -21,6 +21,8 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.MapGet("/", () => Results.Redirect("/swagger"));
+
 app.MapGet("/CheckPassword", CheckPasswordAsync)
     .Produces<CheckPasswordResult>()
     .Produces(404);
