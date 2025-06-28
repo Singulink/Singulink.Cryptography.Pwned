@@ -12,40 +12,20 @@ namespace Singulink.Cryptography.Pwned.Client;
 /// </summary>
 public class PwnedClient : IPwnedClient
 {
-    #region Static HttpClient
+    #region Default HttpClient
 
     private const int DefaultHttpClientRefreshDnsTimeout = 60 * 1000;
 
-    private static readonly object _syncLock = new();
-
-    private static HttpClient? _defaultHttpClient;
-
-    private static HttpClient DefaultHttpClient
-    {
-        get {
-            return _defaultHttpClient ?? GetOrCreateSlow();
-
-            [MethodImpl(MethodImplOptions.NoInlining)]
-            static HttpClient GetOrCreateSlow()
-            {
-                lock (_syncLock)
-                {
-                    if (_defaultHttpClient is not null)
-                        return _defaultHttpClient;
+    private static readonly Lazy<HttpClient> _defaultHttpClient = new(() => {
 #if NET
-                    _defaultHttpClient = new HttpClient(new SocketsHttpHandler {
-                        PooledConnectionLifetime = TimeSpan.FromMilliseconds(DefaultHttpClientRefreshDnsTimeout),
-                    });
+        return new HttpClient(new SocketsHttpHandler {
+            PooledConnectionLifetime = TimeSpan.FromMilliseconds(DefaultHttpClientRefreshDnsTimeout),
+        });
 #else
-                    _defaultHttpClient = new HttpClient();
-                    SetDnsRefreshTimeout(DefaultBaseAddress, DefaultHttpClientRefreshDnsTimeout);
+        SetDnsRefreshTimeout(DefaultBaseAddress, DefaultHttpClientRefreshDnsTimeout);
+        return new HttpClient();
 #endif
-
-                    return _defaultHttpClient;
-                }
-            }
-        }
-    }
+    });
 
     #endregion
 
@@ -93,8 +73,8 @@ public class PwnedClient : IPwnedClient
     /// </summary>
     public async Task<CheckPasswordResult?> CheckPasswordHashAsync(string passwordHash)
     {
-        var client = _httpClientFactory?.CreateClient() ?? DefaultHttpClient;
-        var url = GetApiUrl(client.BaseAddress ?? DefaultBaseAddress, "/CheckPasswordHash", ("passwordHash", passwordHash));
+        var client = GetHttpClient();
+        var url = GetApiUrl(client, "/CheckPasswordHash", ("passwordHash", passwordHash));
 
         return await client.GetOkOrNotFound(PwnedJsonSerializerContext.Default.CheckPasswordResult, url);
     }
@@ -114,9 +94,11 @@ public class PwnedClient : IPwnedClient
 #endif
     }
 
-    private static Uri GetApiUrl(Uri baseAddress, string path, params (string Name, string? Value)[] queryStringParams)
+    private HttpClient GetHttpClient() => _httpClientFactory?.CreateClient() ?? _defaultHttpClient.Value;
+
+    private static Uri GetApiUrl(HttpClient client, string path, params (string Name, string? Value)[] queryStringParams)
     {
-        var uri = new Uri(baseAddress, path);
+        var uri = new Uri(client.BaseAddress ?? DefaultBaseAddress, path);
 
         if (queryStringParams.Length == 0)
             return uri;
