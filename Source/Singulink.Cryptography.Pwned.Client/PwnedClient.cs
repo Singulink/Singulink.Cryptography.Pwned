@@ -1,5 +1,4 @@
 using System.Net;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -18,6 +17,9 @@ public class PwnedClient : IPwnedClient
 
     private static readonly Lazy<HttpClient> _defaultHttpClient = new(() => {
 #if NET
+        if (OperatingSystem.IsBrowser())
+            return new HttpClient();
+
         return new HttpClient(new SocketsHttpHandler {
             PooledConnectionLifetime = TimeSpan.FromMilliseconds(DefaultHttpClientRefreshDnsTimeout),
         });
@@ -79,6 +81,8 @@ public class PwnedClient : IPwnedClient
         return await client.GetOkOrNotFound(PwnedJsonSerializerContext.Default.CheckPasswordResult, url);
     }
 
+    private HttpClient GetHttpClient() => _httpClientFactory?.CreateClient() ?? _defaultHttpClient.Value;
+
     private static string GetSHA1Hash(string input)
     {
         byte[] inputBytes = Encoding.UTF8.GetBytes(input);
@@ -93,8 +97,6 @@ public class PwnedClient : IPwnedClient
         return BitConverter.ToString(hashBytes).Replace("-", string.Empty);
 #endif
     }
-
-    private HttpClient GetHttpClient() => _httpClientFactory?.CreateClient() ?? _defaultHttpClient.Value;
 
     private static Uri GetApiUrl(HttpClient client, string path, params (string Name, string? Value)[] queryStringParams)
     {
