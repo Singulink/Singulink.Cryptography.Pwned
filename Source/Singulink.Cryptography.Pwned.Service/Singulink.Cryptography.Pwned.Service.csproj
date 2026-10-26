@@ -8,20 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <InternalsVisibleTo Include="Singulink.Cryptography.Pwned.Service.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Singulink.Net.Http.Api.Service" />
+    <PackageReference Include="Singulink.Net.Http.Api.Service.Cloudflare" />
     <PackageReference Include="Swashbuckle.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Singulink.Cryptography.Pwned\Singulink.Cryptography.Pwned.csproj" />
+    <ProjectReference Include="..\Singulink.Cryptography.Pwned.Ranges\Singulink.Cryptography.Pwned.Ranges.csproj" />
   </ItemGroup>
 
 </Project>

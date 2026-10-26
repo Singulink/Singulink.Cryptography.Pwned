@@ -1,59 +1,23 @@
 namespace Singulink.Cryptography.Pwned.Tests;
 
+/// <summary>
+/// Tests the client against the live service at https://pwned.singulink.com. They don't run by default (see README).
+/// </summary>
 [TestClass]
+[TestCategory("Live")]
 public class CheckPasswordTests
 {
-    private static readonly PwnedClient _client = new();
+    private static readonly PwnedClient _client = new(new Uri("https://pwned.singulink.com/"));
 
     [TestMethod]
-    public async Task CheckPasswordAsync_PasswordDoesNotExist_NotFound()
+    public async Task GetBreachCount_PasswordNotInTheData_ReturnsZero()
     {
-        var result = await _client.CheckPasswordAsync("dsjadjbsa");
-
-        result.ShouldBeNull();
+        (await _client.GetBreachCountAsync("dsjadjbsa")).ShouldBe(0);
     }
 
     [TestMethod]
-    public async Task CheckPasswordAsync_PasswordExists_ReturnsSuccess()
+    public async Task GetBreachCount_PasswordInTheData_ReturnsCount()
     {
-        var result = await _client.CheckPasswordAsync("1234");
-
-        result.ShouldNotBeNull();
-        result.Count.ShouldBeGreaterThan(0);
-    }
-
-    [TestMethod]
-    public async Task CheckPasswordHashAsync_PasswordHashDoesNotExist_NotFound()
-    {
-        var result = await _client.CheckPasswordHashAsync("cf7462ba02ed08d001d2e979299e1b3d95ce00e0");
-
-        result.ShouldBeNull();
-    }
-
-    [TestMethod]
-    public async Task CheckPasswordHashAsync_PasswordHashExist_ReturnsSuccess()
-    {
-        var result = await _client.CheckPasswordHashAsync("81fe8bfe87576c3ecb22426f8e57847382917acf");
-
-        result.ShouldNotBeNull();
-        result.Count.ShouldBeGreaterThan(0);
-    }
-
-    [TestMethod]
-    public async Task CheckPasswordHashAsync_WrongLength_ReturnsErrorMessage()
-    {
-        var act = () => _client.CheckPasswordHashAsync("81fe8bfe87576c3ecb22426f8e5784738");
-
-        var ex = await act.ShouldThrowAsync<HttpRequestException>();
-        ex.Message.ShouldBe("Password hash should be 40 hex characters.");
-    }
-
-    [TestMethod]
-    public async Task CheckPasswordHashAsync_NotHexCharacter_ReturnsErrorMessage()
-    {
-        var act = () => _client.CheckPasswordHashAsync("cf7462ba02ed08d001d2e979299e1b3d95ce00e!");
-
-        var ex = await act.ShouldThrowAsync<HttpRequestException>();
-        ex.Message.ShouldBe("Password hash should be 40 hex characters.");
+        (await _client.GetBreachCountAsync("1234")).ShouldBeGreaterThan(0);
     }
 }

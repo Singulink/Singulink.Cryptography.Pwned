@@ -6,43 +6,35 @@ on:
   pull_request:
     branches: [ main ]
 
+# Auto-cancel any old in-progress runs for the same PR, but not for non-PR runs
+concurrency:
+  group: ${{ github.event.pull_request.number && format('pr-{0}', github.event.pull_request.number) || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
-  debug-windows:
+  # Windows, since the client's tests run on .NET Framework too. The tests that call the live service are left out (see README).
+  windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
 
     runs-on: windows-latest
+    name: windows-x64-${{ matrix.configuration == 'Debug' && 'debug' || 'release' }}
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v7
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v6
       with:
         dotnet-version: |
           10.0.x
     - name: Clean
-      run: dotnet clean --configuration Debug && dotnet nuget locals all --clear
+      run: dotnet clean Singulink.Cryptography.Pwned.slnx --configuration ${{ matrix.configuration }} && dotnet nuget locals all --clear
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore Singulink.Cryptography.Pwned.slnx
     - name: Build
-      run: dotnet build --configuration Debug --no-restore
+      run: dotnet build Singulink.Cryptography.Pwned.slnx --configuration ${{ matrix.configuration }} --no-restore
     - name: Test
-      run: dotnet test --configuration Debug --no-build --verbosity normal
-
-  release-windows:
-
-    runs-on: windows-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: |
-          10.0.x
-    - name: Clean
-      run: dotnet clean --configuration Release && dotnet nuget locals all --clear
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
+      run: dotnet test Singulink.Cryptography.Pwned.slnx --configuration ${{ matrix.configuration }} --no-build --verbosity normal

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+    <PackageTags>pwned; passwords; client; server; service;</PackageTags>
+    <Description>Types shared by the Singulink Pwned Passwords client and service: check results, error codes and JSON type info.</Description>
+    <PackageProjectUrl>https://github.com/Singulink/Singulink.Cryptography.Pwned</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Link="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="PolySharp" PrivateAssets="All" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+</Project>

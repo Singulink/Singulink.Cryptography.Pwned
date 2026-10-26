@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Description>Downloads Pwned Passwords ranges from Have I Been Pwned into range files and looks up password hashes in them.</Description>
+    <SignAssembly>false</SignAssembly>
+    <IsPackable>false</IsPackable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Singulink.Cryptography.Pwned.Service" />
+    <InternalsVisibleTo Include="Singulink.Cryptography.Pwned.Service.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+</Project>

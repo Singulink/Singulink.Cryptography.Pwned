@@ -2,6 +2,9 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
+    <!-- The version of the packages, which ship together: Singulink.Cryptography.Pwned and Singulink.Cryptography.Pwned.Client. -->
+    <Version>3.0.1</Version>
+
     <Authors>Singulink</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>© Singulink. All rights reserved.</Copyright>

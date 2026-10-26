@@ -5,6 +5,9 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+
+    <!-- Leaves out the tests that call the live service, unless RunLiveTests is true (see README). -->
+    <RunArguments Condition="'$(RunLiveTests)' != 'true'">--settings "$(MSBuildProjectDirectory)\ExcludeLiveTests.runsettings"</RunArguments>
   </PropertyGroup>
 
   <ItemGroup>

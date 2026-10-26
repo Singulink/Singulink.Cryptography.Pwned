@@ -10,12 +10,45 @@ guidelines = 160
 #### Core EditorConfig Options ####
 charset = utf-8
 indent_style = space
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Default line endings for all files
+end_of_line = lf
+
+########### Patch File Settings ###########
+
+[*.{patch,diff}]
+indent_style = unset
+trim_trailing_whitespace = unset
+insert_final_newline = unset
+
+########### Powershell File Settings ###########
+
+[*.ps1]
+end_of_line = crlf
+
+############ INI File Settings ###########
+
+[*.ini]
+end_of_line = crlf
 
 ########### XML File Settings ###########
 
-[*.{csproj,props,targets,proj,projitems,shproj}]
+[*.{csproj,props,targets,proj,projitems,shproj,slnx}]
 end_of_line = crlf
 indent_size = 2
+
+[*.csproj]
+charset = utf-8-bom
+
+[*.slnx]
+end_of_line = crlf
+
+[*.sln]
+charset = utf-8-bom
+end_of_line = crlf
+indent_style = tab
 
 [*.xml]
 end_of_line = lf
@@ -26,11 +59,21 @@ charset = utf-8-bom
 end_of_line = crlf
 indent_size = 2
 
+[*.resw]
+end_of_line = lf
+indent_size = 2
+
 [web.config]
 end_of_line = lf
 indent_size = 2
 
 [*.plist]
+end_of_line = lf
+indent_size = 2
+indent_style = tab
+
+[*.xcprivacy]
+charset = utf-8-bom
 end_of_line = lf
 indent_size = 2
 indent_style = tab
@@ -43,7 +86,7 @@ indent_size = 2
 
 ########### JSON File Settings ###########
 
-[*.{json,slnf}]
+[*.{json,slnf,ipproj}]
 end_of_line = lf
 indent_size = 2
 
@@ -63,19 +106,27 @@ indent_size = 4
 
 [*.html]
 end_of_line = lf
-indent_size = 2
+indent_size = 4
+
+########### Markdown File Settings ###########
+
+[*.md]
+end_of_line = lf
+indent_size = 4
+trim_trailing_whitespace = false
+
+########### C# Migrations File Settings ###########
+[**/Migrations/*.cs]
+charset = utf-8-bom
 
 ########### C# File Settings ###########
 [*.cs]
 
 #### Core EditorConfig Options ####
 
-# Indentation and spacing
 indent_size = 4
-
-# New line preferences
 end_of_line = crlf
-insert_final_newline = false
+trim_trailing_whitespace = false
 
 #### .NET Coding Conventions ####
 
@@ -314,7 +365,7 @@ dotnet_diagnostic.SA1128.severity = none
 dotnet_diagnostic.SA1200.severity = none
 
 # SA1618: Generic type parameters should be documented
-dotnet_diagnostic.SA1618.severity = suggestion
+dotnet_diagnostic.SA1618.severity = silent
 
 # CA1303: Do not pass literals as localized parameters
 dotnet_diagnostic.CA1303.severity = none
@@ -386,7 +437,7 @@ dotnet_diagnostic.SA1204.severity = none
 dotnet_diagnostic.SA1311.severity = suggestion
 
 # CA1034: Nested types should not be visible
-dotnet_diagnostic.CA1034.severity = suggestion
+dotnet_diagnostic.CA1034.severity = none
 
 # CA2225: Operator overloads have named alternates
 dotnet_diagnostic.CA2225.severity = none
@@ -413,16 +464,13 @@ dotnet_diagnostic.CA1060.severity = none
 dotnet_diagnostic.SA1519.severity = silent
 
 # SA1214: Readonly fields should appear before non-readonly fields
-dotnet_diagnostic.SA1214.severity = suggestion
-
-# SA1518: Use line endings correctly at end of file
-dotnet_diagnostic.SA1518.severity = none
+dotnet_diagnostic.SA1214.severity = none
 
 # SA1402: File may only contain a single type
 dotnet_diagnostic.SA1402.severity = none
 
 # IDE0028: Simplify collection initialization
-dotnet_diagnostic.IDE0028.severity = warning
+dotnet_diagnostic.IDE0028.severity = suggestion
 
 # IDE0057: Use range operator
 dotnet_diagnostic.IDE0057.severity = warning
@@ -432,3 +480,46 @@ dotnet_diagnostic.IDE0059.severity = warning
 
 # RS0030: Do not use banned APIs
 dotnet_diagnostic.RS0030.severity = error
+
+# CS9113: Parameter is unread.
+dotnet_diagnostic.CS9113.severity = suggestion
+
+# SA1116: Split parameters should start on line after declaration
+dotnet_diagnostic.SA1116.severity = none
+
+# SA1117: Parameters should be on same line or separate lines
+dotnet_diagnostic.SA1117.severity = none
+
+# CS9113: Parameter is unread.
+dotnet_diagnostic.CS9113.severity = suggestion
+
+# SA1401: Fields should be private
+dotnet_diagnostic.SA1401.severity = suggestion
+
+# CA2007: Do not directly await a Task
+# Pending the standard style set: error in FulcrumFS, lowered here because 48 awaits in the client, ranges and service projects lack ConfigureAwait
+dotnet_diagnostic.CA2007.severity = suggestion
+
+# CA2016: Forward the 'CancellationToken' parameter to methods
+dotnet_diagnostic.CA2016.severity = warning
+
+# RS0016: Add public types and members to the declared API
+dotnet_diagnostic.RS0016.severity = none
+
+# RS0037: Enable tracking of nullability of reference types in the declared API
+dotnet_diagnostic.RS0037.severity = none
+
+# RS0026: Do not add multiple public overloads with optional parameters
+dotnet_diagnostic.RS0026.severity = none
+
+# CA2208: Instantiate argument exceptions correctly
+dotnet_diagnostic.CA2208.severity = warning
+
+# SA1405: Debug.Assert should provide message text
+dotnet_diagnostic.SA1405.severity = suggestion
+
+# SA1009: Closing parenthesis should be spaced correctly
+dotnet_diagnostic.SA1009.severity = suggestion
+
+# SA1111: Closing parenthesis should be on line of last parameter
+dotnet_diagnostic.SA1111.severity = suggestion

@@ -6,18 +6,15 @@ namespace Singulink.Cryptography.Pwned.Client;
 public interface IPwnedClient
 {
     /// <summary>
-    /// Checks the specified password against the Pwned Passwords database.
+    /// Gets the number of times the specified password appears in the Pwned Passwords data. The password is hashed with SHA-1 over its UTF-8 bytes, and
+    /// only the hash is sent to the service.
     /// </summary>
+    /// <param name="password">The password to check.</param>
+    /// <param name="cancellationToken">A token to cancel the request.</param>
     /// <returns>
-    /// A <see cref="CheckPasswordResult"/> if the password is found in the database; otherwise <see langword="null"/>.
+    /// The number of times the password appears in the data, or 0 if it doesn't appear.
     /// </returns>
-    public Task<CheckPasswordResult?> CheckPasswordAsync(string password);
-
-    /// <summary>
-    /// Checks the specified SHA1 password hash against the Pwned Passwords database.
-    /// </summary>
-    /// <returns>
-    /// A <see cref="CheckPasswordResult"/> if the password is found in the database; otherwise <see langword="null"/>.
-    /// </returns>
-    public Task<CheckPasswordResult?> CheckPasswordHashAsync(string passwordHash);
+    /// <exception cref="Net.Http.Api.ApiException">The service returned an error, such as a <see cref="Net.Http.Api.ServiceUnavailableApiException"/> with
+    /// one of the <see cref="PwnedErrorCodes"/> when the password hash's range isn't available.</exception>
+    public Task<int> GetBreachCountAsync(string password, CancellationToken cancellationToken = default);
 }

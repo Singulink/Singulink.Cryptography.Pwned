@@ -1,31 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
-    <LangVersion>preview</LangVersion>
-    <Version>2.0</Version>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <PackageTags>pwned; passwords; client; server; service; database;</PackageTags>
-    <Description>Free .NET Pwned password database client and server.</Description>
+    <Description>Client for the Singulink Pwned Passwords service, which checks passwords against Have I Been Pwned's data.</Description>
     <PackageProjectUrl>https://github.com/Singulink/Singulink.Cryptography.Pwned</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="..\Singulink.Cryptography.Pwned.Service\CheckPasswordResult.cs" Link="CheckPasswordResult.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\README.md" Link="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Http" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Singulink.Net.Http.Api.Client" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Singulink.Cryptography.Pwned\Singulink.Cryptography.Pwned.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="PolySharp" PrivateAssets="All" />
-    <PackageReference Include="System.Net.Http.Json" />
   </ItemGroup>
 
 </Project>
