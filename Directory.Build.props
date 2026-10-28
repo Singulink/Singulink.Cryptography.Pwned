@@ -16,14 +16,6 @@
 
     <DefaultLanguage>en</DefaultLanguage>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-
-    <!-- Fody -->
-
-    <WeaverConfiguration>
-      <Weavers>
-        <RuntimeNullables />
-      </Weavers>
-    </WeaverConfiguration>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
@@ -31,8 +23,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Fody -->
-    <PackageReference Include="RuntimeNullables.Fody" PrivateAssets="all" />
+    <!-- Null checks -->
+    <PackageReference Include="Singulink.RuntimeNullables" PrivateAssets="all" />
 
     <!-- Analyzers -->
     <PackageReference Include="DotNetAnalyzers.DocumentationAnalyzers" PrivateAssets="all" />
